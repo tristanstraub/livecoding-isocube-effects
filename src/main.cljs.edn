@@ -1,0 +1,2 @@
+{:init-fns         [iso.client/main]
+ :require          [iso.client]}

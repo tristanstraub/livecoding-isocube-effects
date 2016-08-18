@@ -21,14 +21,7 @@
   (let [ctx (.getContext canvas-el "2d")]
     (set! (.. ctx -fillStyle) "#222")
 
-    (let [width (.-width canvas-el)
-          height (.-height canvas-el)]
-      (.beginPath ctx)
-      (.fillRect ctx
-                 0 0
-                 width height)
-      (.closePath ctx))
-
+    (e/clear ctx (.-width canvas-el) (.-height canvas-el) "#222")
 
     (e/draw-sine-wave ctx
                       (.-width canvas-el)

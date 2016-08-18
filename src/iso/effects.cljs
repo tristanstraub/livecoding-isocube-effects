@@ -34,3 +34,11 @@
                                      (nth "0123456789abcdef" (mod (* 15 (Math/sin (* 7 i (/ (/ Math/PI 2) n)))) 16))
                                      )
                          :scale (/ 0.25 growth))))))
+
+(defn clear [ctx width height color]
+  (.beginPath ctx)
+  (set! (.. ctx -fillStyle) color)
+  (.fillRect ctx
+             0 0
+             width height)
+  (.closePath ctx))

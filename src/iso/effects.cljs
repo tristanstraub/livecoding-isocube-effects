@@ -47,8 +47,9 @@
 (defn draw-floor [ctx width height d]
   (let [cols 20
         rows 20
-        scale 0.125
-        scale-n 1]
+        scale 0.25
+        scale-n 1
+        n 16]
 
     (doseq [[j i] (->> (range rows)
                        (map-indexed (fn [j]
@@ -60,6 +61,13 @@
                                     [(+ (* (mod j 2) (/ (* scale-n 25) 2))
                                         (* (* scale-n 25) i)
                                         )
-                                     (+ (* 20 (Math/sin (+ i j (/ d 1000)))) (* (* scale-n 25) (/ j 2)))])
-                       :color "#fff"
+                                     (let [i (- i (/ cols 2))
+                                           j (- j (/ rows 2))]
+                                       (+ (* 20 (Math/sin (+ (Math/sqrt (+ (* i i) (* j j))) (/ d 1000)))) (* (* scale-n 25) (/ j 2))))])
+
+                         :color (str "#"
+                                     (nth "0123456789abcdef" (mod (* 15 (Math/sin (* i (/ (/ Math/PI 2) n)))) 16))
+                                     (nth "0123456789abcdef" (mod (* 15 (Math/sin (* 3 i (/ (/ Math/PI 2) n)))) 16))
+                                     (nth "0123456789abcdef" (mod (* 15 (Math/sin (* 7 i (/ (/ Math/PI 2) n)))) 16))
+                                     )
                        :scale (* scale-n scale)))))

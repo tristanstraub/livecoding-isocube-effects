@@ -44,7 +44,7 @@
   (.closePath ctx))
 
 
-(defn draw-floor [ctx width height]
+(defn draw-floor [ctx width height d]
   (let [cols 20
         rows 20
         scale 0.125
@@ -56,9 +56,10 @@
                                            (map-indexed (fn [i] [j i])))))
                        (apply concat))]
 
-      (d/draw-iso-cube ctx (d/v-+-v [(/ width 2) (/ height 2)]
+      (d/draw-iso-cube ctx (d/v-+-v [(- (/ width 2) 200) (+ 100 (/ height 2))]
                                     [(+ (* (mod j 2) (/ (* scale-n 25) 2))
-                                        (* (* scale-n 25) i))
-                                     (* (* scale-n 25) (/ j 2))])
+                                        (* (* scale-n 25) i)
+                                        )
+                                     (+ (* 20 (Math/sin (+ i j (/ d 1000)))) (* (* scale-n 25) (/ j 2)))])
                        :color "#fff"
                        :scale (* scale-n scale)))))

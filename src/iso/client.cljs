@@ -33,7 +33,7 @@
                      (.-height canvas-el)
                      delta)
 
-    (e/draw-floor ctx (.-width canvas-el) (.-height canvas-el))
+    (e/draw-floor ctx (.-width canvas-el) (.-height canvas-el) delta)
 
     ))
 

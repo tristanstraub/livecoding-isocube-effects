@@ -31,7 +31,11 @@
     (e/draw-circular ctx
                      (.-width canvas-el)
                      (.-height canvas-el)
-                     delta)))
+                     delta)
+
+    (e/draw-floor ctx (.-width canvas-el) (.-height canvas-el))
+
+    ))
 
 (defonce animator
   (do

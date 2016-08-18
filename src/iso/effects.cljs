@@ -42,3 +42,23 @@
              0 0
              width height)
   (.closePath ctx))
+
+
+(defn draw-floor [ctx width height]
+  (let [cols 20
+        rows 20
+        scale 0.125
+        scale-n 1]
+
+    (doseq [[j i] (->> (range rows)
+                       (map-indexed (fn [j]
+                                      (->> (range cols)
+                                           (map-indexed (fn [i] [j i])))))
+                       (apply concat))]
+
+      (d/draw-iso-cube ctx (d/v-+-v [(/ width 2) (/ height 2)]
+                                    [(+ (* (mod j 2) (/ (* scale-n 25) 2))
+                                        (* (* scale-n 25) i))
+                                     (* (* scale-n 25) (/ j 2))])
+                       :color "#fff"
+                       :scale (* scale-n scale)))))

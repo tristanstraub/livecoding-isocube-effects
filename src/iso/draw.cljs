@@ -18,8 +18,11 @@
   (.stroke ctx)
   (.closePath ctx))
 
-(defn draw-poly [ctx points]
+(defn draw-poly [ctx points & {:keys [fill]}]
   (set! (.. ctx -strokeStyle) *color*)
+  (when fill
+    (set! (.. ctx -fillStyle) fill))
+
   (.beginPath ctx)
 
   (apply move-to ctx (first points))
@@ -30,6 +33,8 @@
   (apply line-to ctx (first points))
 
   (.stroke ctx)
+  (when fill
+    (.fill ctx))
   (.closePath ctx))
 
 (defn draw-silhouette [ctx]
@@ -64,7 +69,8 @@
     (binding [*color* color]
       (draw-poly ctx
                  (->> (outline squishiness middle)
-                      t))
+                      t)
+                 :fill "#000")
 
       (doseq [line [[[-1 0] [0 (/ middle 2)]]
                     [[1 0] [0 (/ middle 2)]]

@@ -10,14 +10,17 @@
 
 (defn draw-line [ctx points]
   (set! (.. ctx -strokeStyle) *color*)
+  (.beginPath ctx)
 
   (apply move-to ctx (first points))
   (apply line-to ctx (last points))
 
-  (.stroke ctx))
+  (.stroke ctx)
+  (.closePath ctx))
 
 (defn draw-poly [ctx points]
   (set! (.. ctx -strokeStyle) *color*)
+  (.beginPath ctx)
 
   (apply move-to ctx (first points))
 
@@ -26,7 +29,8 @@
 
   (apply line-to ctx (first points))
 
-  (.stroke ctx))
+  (.stroke ctx)
+  (.closePath ctx))
 
 (defn draw-silhouette [ctx]
   (draw-poly ctx [[0 0]

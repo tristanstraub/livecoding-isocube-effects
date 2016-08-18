@@ -21,7 +21,6 @@
   (let [ctx (.getContext canvas-el "2d")]
     (set! (.. ctx -fillStyle) "#222")
 
-
     (let [width (.-width canvas-el)
           height (.-height canvas-el)]
       (.beginPath ctx)

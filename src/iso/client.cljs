@@ -1,7 +1,8 @@
 (ns iso.client
   (:require [rum.core :as r]
             [goog.dom :as dom]
-            [iso.draw :as d]))
+            [iso.draw :as d]
+            [iso.effects :as e]))
 
 (enable-console-print!)
 
@@ -15,25 +16,30 @@
 
                 state)})
 
+
 (defn frame [delta & args]
-  (let [d (/ delta 1000)]
+  (let [ctx (.getContext canvas-el "2d")]
+    (set! (.. ctx -fillStyle) "#222")
 
-    (let [ctx (.getContext canvas-el "2d")]
 
-      (set! (.. ctx -fillStyle) "#222")
-
+    (let [width (.-width canvas-el)
+          height (.-height canvas-el)]
       (.beginPath ctx)
       (.fillRect ctx
                  0 0
-                 (.-width canvas-el)
-                 (.-height canvas-el))
-      (.closePath ctx)
+                 width height)
+      (.closePath ctx))
 
-      (let [n 20]
-        (doseq [pos (map (fn [i] [(* 50 i) (* -200 (Math/sin (+ d (* i (/ (* 2 Math/PI) n)))))]) (range n))]
-          (d/draw-iso-cube ctx (d/v-+-v [0 250] pos)
-                           :color "#f0f"
-                           :scale 0.25))))))
+
+    (e/draw-sine-wave ctx
+                      (.-width canvas-el)
+                      (.-height canvas-el)
+                      delta)
+
+    (e/draw-circular ctx
+                     (.-width canvas-el)
+                     (.-height canvas-el)
+                     delta)))
 
 (defonce animator
   (do

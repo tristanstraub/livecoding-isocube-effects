@@ -53,9 +53,8 @@
   (let [middle      2
         squishiness 0.5
         t #(->> %
-                (map (partial s-*-v 100))
-                (map (partial v-+-v [150 150]))
-                (map (partial s-*-v scale))
+                (map (partial s-*-v (* scale 100)))
+                ;; (map (partial v-+-v [150 150]))
                 (map (partial v-+-v pos)))]
 
     (binding [*color* color]
